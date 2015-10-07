@@ -17,7 +17,13 @@ module Poloniex
     def self.by_pair(pair, depth = 50)
       pair = normalize_pair(pair)
       response = client.get('returnOrderBook', { currencyPair: pair, depth: depth })
-      new([pair, response]) if response.present? && !response['error']
+      new([pair, response]) if response.present? && !error_present?(response)
+    end
+
+    private
+
+    def self.error_present?(response)
+      response.is_a?(Array) ? response.first['error'].present? : response['error'].present?
     end
   end
 end
