@@ -32,6 +32,27 @@ Poloniex.setup do | config |
 end
 ```
 
+### in Rails
+
+You can get total BTC from poloniex now.
+
+```
+class TradeTrackingController < ApplicationController
+  def index
+    Poloniex.client.instance_variable_set(:@key, "xxx-xxx-xxx-xxx")
+    Poloniex.client.instance_variable_set(:@secret, "awesome_secret")
+
+    @total_btc = 0
+
+    Poloniex::Wallet.balances.each do |coin_type|
+      @total_btc += coin_type.balance["btcValue"].to_f
+    end
+  end
+end
+```
+
+
+
 GET requests ( to /public ) do not need authentication, and therefor do not need Poloniex to be configured.
 
 POST requests ( to /tradingApi ) will need authentication, and you will have to have your own key and secret token.
