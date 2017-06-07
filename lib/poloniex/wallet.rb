@@ -15,5 +15,17 @@ module Poloniex
     def self.balance_by_currency(currency)
       balances.detect { |e| e.currency == normalize_currency(currency) }
     end
+
+    def self.total_btc
+      response = client.post('returnCompleteBalances')
+
+      btc = 0
+
+      response.each do |coin_type|
+        btc += coin_type[1]["btcValue"].to_f
+      end
+
+      btc
+    end
   end
 end

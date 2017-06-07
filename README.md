@@ -39,14 +39,7 @@ You can get total BTC from poloniex now.
 ```
 class TradeTrackingController < ApplicationController
   def index
-    Poloniex.client.instance_variable_set(:@key, "xxx-xxx-xxx-xxx")
-    Poloniex.client.instance_variable_set(:@secret, "awesome_secret")
-
-    @total_btc = 0
-
-    Poloniex::Wallet.balances.each do |coin_type|
-      @total_btc += coin_type.balance["btcValue"].to_f
-    end
+    @total_btc = Poloniex::Wallet.total_btc
   end
 end
 ```
