@@ -8,7 +8,7 @@ module Poloniex
     end
 
     def self.balances
-      response = client.post('returnBalances')
+      response = client.post('returnCompleteBalances')
       response.map { |e| new(e)  } if response.present?
     end
 
